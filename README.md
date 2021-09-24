@@ -5,14 +5,16 @@ It will check if monerod is running, responsive, and in need of a restart based 
 
 **Dependencies**
 
-curl, pgrep, bc
+screen, curl, pgrep, bc
 
 **Change the the variables in each script to match your filesystem paths**
 
 #location of monerod scripts
+
 script_dir="/path/to/scripts"
 
 #location of monerod binary
+
 monerod_dir="/usr/local/bin"
 
 **Add a cron job to run the check script**
