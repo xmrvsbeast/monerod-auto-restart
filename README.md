@@ -1,0 +1,1 @@
+# monerod-auto-restart
