@@ -27,8 +27,15 @@ crontab -e
 
 */5 * * * * /path/to/scripts/check_monerod_status.sh >> /path/to/scripts/log/check_monerod_status.log
 
+**Run the script**
+
+Make the scripts executable chmod +x check_monerod_status.sh monerod-run.sh
+
+Now you can run the check_monerod_status.sh script and it will start monerod, or wait for the cron job to kick it off
+
 **Disable/Enable auto-restart**
 
 mv -f monerod-restart.trigger monerod-restart.trigger-off
 
 mv -f monerod-restart.trigger-off monerod-restart.trigger
+
