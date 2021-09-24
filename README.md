@@ -3,6 +3,10 @@
 These scripts will allow you to manage monerod restarts automatically.
 It will check if monerod is running, responsive, and in need of a restart based on a uptime that you can set
 
+**Dependencies**
+
+curl, pgrep, bc
+
 **Change the the variables in each script to match your filesystem paths**
 
 #location of monerod scripts
