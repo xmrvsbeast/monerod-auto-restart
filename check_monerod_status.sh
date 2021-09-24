@@ -50,7 +50,7 @@ uptime_scale="hours"
 #uptime_scale="days"
 
 #start loop to check conditions for monerod restart
-while [ "$monerod_uptime" -ge "7" ]
+while [ "$monerod_uptime" -ge "12" ]
 do
 	date
 	touch $state_file
