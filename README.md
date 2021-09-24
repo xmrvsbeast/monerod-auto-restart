@@ -1,7 +1,7 @@
 # monerod-auto-restart
 
 These scripts will allow you to manage monerod restarts automatically.
-It will check if monerod is running, responsive, and in need of a restart based on a uptime that you can set
+It will check if monerod is running, responsive, and in need of a restart based on a uptime that you can set.  By default it will restart monerod every 12 hours.
 
 **Dependencies**
 
