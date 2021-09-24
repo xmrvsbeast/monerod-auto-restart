@@ -17,6 +17,8 @@ script_dir="/path/to/scripts"
 
 monerod_dir="/usr/local/bin"
 
+Then stop your monerod, we will let the script start and manage it.
+
 **Add a cron job to run the check script**
 
 crontab -e
