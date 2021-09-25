@@ -55,7 +55,7 @@ while [ "$monerod_uptime" -ge "$monerod_uptime_limit" ]
 do
 	date
 	touch $state_file
-	echo "monerod uptime is $monerod_uptime_d days and $monerod_uptime_hr, checking restart conditions"
+	echo "monerod uptime is $monerod_uptime_d day(s) and $monerod_uptime_hr hour(s), checking restart conditions"
 	
 	#check last block recorded time via RPC
 	lbr_time=$(curl -s --max-time 1 http://127.0.0.1:18081/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"get_last_block_header"}' -H 'Content-Type: application/json' |grep -Po 'timestamp": \K[^",]*')
