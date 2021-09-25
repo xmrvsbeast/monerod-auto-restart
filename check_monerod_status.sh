@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #location of monerod scripts
-script_dir="/home/user/downloads/crypto/scripts"
+script_dir="/path/to/scripts"
 
 #location of monerod binary
 monerod_dir="/usr/local/bin"
@@ -75,7 +75,7 @@ do
 		echo "Last block recorded time is $lbr_time sec, restarting monerod..."
 		echo "System memory usage before monerod restart"
 		free -m
-		$monerod_dir/monerod --testnet stop_daemon
+		$monerod_dir/monerod stop_daemon
 		rm -f $state_file
 		echo
 		exit
