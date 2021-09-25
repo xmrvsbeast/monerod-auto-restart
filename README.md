@@ -21,7 +21,7 @@ screen, curl, pgrep, bc
 
 Then stop your monerod, we will let the script start and manage it.  A screen session is started you can attach to it by the command
 
-    screen -S monerod
+    screen -r monerod
 
 **Add a cron job to run the check script**
 
