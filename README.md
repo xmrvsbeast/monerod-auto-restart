@@ -38,7 +38,7 @@ Now you can run the check_monerod_status.sh script and it will start monerod, or
 
 **Disable/Enable auto-restart**
 
-If the file "monerod-restart.trigger" is removed or renamed and monerod is terminated it will not auto-restart, usefull if you are going to shutdown/restart the system.
+If the file "monerod-restart.trigger" is removed or renamed and monerod is terminated it will not auto-restart, useful if you are going to shutdown/restart the system.
 
     mv -f monerod-restart.trigger monerod-restart.trigger-off
     mv -f monerod-restart.trigger-off monerod-restart.trigger
