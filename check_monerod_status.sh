@@ -82,7 +82,7 @@ do
 	else
 		echo "Last block recorded time is $lbr_time sec, delaying monerod restart"
 		sleep 20
-		monerod_uptime=$(monerod status |tail -2 |awk '{printf $16}' |sed 's/d//g')
+		monerod_uptime=$(monerod status |tail -2)
 		monerod_uptime_d=$(echo $monerod_uptime |awk '{printf $16}' |sed 's/d//g')
 		monerod_uptime_hr=$(echo $monerod_uptime |awk '{printf $17}' |sed 's/h//g')
 
