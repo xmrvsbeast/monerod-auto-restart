@@ -1,10 +1,16 @@
 #!/bin/bash
 
 #location of monerod scripts
-script_dir="/path/to/scripts"
+script_dir="/home/user/downloads/crypto/scripts"
 
 #location of monerod binary
 monerod_dir="/usr/local/bin"
+
+#set your restart uptime limits, example: 1 days 12 hours
+uptime_days="1"
+uptime_hours="12"
+
+state_file="$script_dir/monerod-restart.active"
 
 #find monerod screen
 monerod_screen=$(screen -ls | awk '/monerod/ {print $1}')
@@ -14,6 +20,7 @@ if [ -z "$monerod_screen" ]; then
         date
         echo "Not Running, Starting..."
 	screen -dmS monerod "$script_dir/monerod-run.sh"
+	rm -f $state_file
         echo
 	exit
 fi
@@ -33,28 +40,22 @@ if [ -z "$lbr_time" ];then
 	exit
 fi
 
-#Check if monerod needs to be restarted
-state_file="$script_dir/monerod-restart.active"
-
 #check if script is already running
 if [ -f "$state_file" ];then exit ;fi
 
-#get monerod uptime hour value, uncomment to use hours
-monerod_uptime_hr=$(monerod status |tail -2 |awk '{printf $17}' |sed 's/h//g')
-monerod_uptime=$monerod_uptime_hr
-uptime_scale="hours"
-
-#get monerod uptime day value, uncomment to use days
-#monerod_uptime_d=$(monerod status |tail -2 |awk '{printf $16}' |sed 's/d//g')
-#monerod_uptime=$monerod_uptime_d
-#uptime_scale="days"
+#get monerod uptime values
+monerod_uptime=$(monerod status |tail -2)
+monerod_uptime_d=$(echo $monerod_uptime |awk '{printf $16}' |sed 's/d//g')
+monerod_uptime_hr=$(echo $monerod_uptime |awk '{printf $17}' |sed 's/h//g')
+monerod_uptime=$(echo "$monerod_uptime_d*24+$monerod_uptime_hr" |bc)
+monerod_uptime_limit=$(echo "$uptime_days*24+$uptime_hours" |bc)
 
 #start loop to check conditions for monerod restart
-while [ "$monerod_uptime" -ge "12" ]
+while [ "$monerod_uptime" -ge "$monerod_uptime_limit" ]
 do
 	date
 	touch $state_file
-	echo "monerod uptime is $monerod_uptime $uptime_scale, checking restart conditions"
+	echo "monerod uptime is $monerod_uptime_d days and $monerod_uptime_hr, checking restart conditions"
 	
 	#check last block recorded time via RPC
 	lbr_time=$(curl -s --max-time 1 http://127.0.0.1:18081/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"get_last_block_header"}' -H 'Content-Type: application/json' |grep -Po 'timestamp": \K[^",]*')
@@ -81,10 +82,12 @@ do
 	else
 		echo "Last block recorded time is $lbr_time sec, delaying monerod restart"
 		sleep 20
-		monerod_uptime_hr=$(monerod status |tail -2 |awk '{printf $17}' |sed 's/h//g')
+		monerod_uptime=$(monerod status |tail -2 |awk '{printf $16}' |sed 's/d//g')
+		monerod_uptime_d=$(echo $monerod_uptime |awk '{printf $16}' |sed 's/d//g')
+		monerod_uptime_hr=$(echo $monerod_uptime |awk '{printf $17}' |sed 's/h//g')
 
 		#check if monerod still needs to be restarted
-		if [ "$monerod_uptime_hr" -lt "1" ];then
+		if [ "$monerod_uptime_d" -lt "1" ] && [ "$monerod_uptime_hr" -lt "1" ] ;then
 			echo "monerod restarted outside of script, exiting"
 			rm -f $state_file
 			echo
