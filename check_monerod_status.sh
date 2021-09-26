@@ -59,7 +59,6 @@ do
 	
 	#check last block recorded time via RPC
 	lbr_time=$(curl -s --max-time 1 http://127.0.0.1:18081/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"get_last_block_header"}' -H 'Content-Type: application/json' |grep -Po 'timestamp": \K[^",]*')
-	lbr_time=$(echo "($(date +%s) - $lbr_time)" |bc -l)
 
 	#if LBR time is null force kill monerod
 	if [ -z "$lbr_time" ];then 
@@ -69,6 +68,9 @@ do
 		rm -f $state_file
 		exit
 	fi
+	
+	#cal LBR time stamp into seconds since now
+	lbr_time=$(echo "($(date +%s) - $lbr_time)" |bc -l)
 
 	#if LBR time is <= 60 seconds issue monerod stop command, otherwise wait and try again
 	if [ "$lbr_time" -le "60" ];then
