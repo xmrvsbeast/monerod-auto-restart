@@ -40,7 +40,9 @@ A screen session is started you can attach to it by the command.
 
     screen -r monerod
     
-    Ctrl+a then d to detach from the screen
+to detach from the screen...
+    
+    Ctrl+a, release, then d
 
 **Disable/Enable auto-restart**
 
