@@ -85,6 +85,7 @@ do
 		monerod_uptime=$(monerod status |grep "uptime")
 		monerod_uptime_d=$(echo $monerod_uptime |awk '{printf $16}' |sed 's/d//g')
 		monerod_uptime_hr=$(echo $monerod_uptime |awk '{printf $17}' |sed 's/h//g')
+		monerod_uptime=$(echo "$monerod_uptime_d*24+$monerod_uptime_hr" |bc)
 
 		#check if monerod still needs to be restarted
 		if [ "$monerod_uptime_d" -lt "1" ] && [ "$monerod_uptime_hr" -lt "1" ] ;then
