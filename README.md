@@ -34,8 +34,9 @@ Make the scripts executable
 
     chmod +x check_monerod_status.sh monerod-run.sh
 
-Now you can run the check_monerod_status.sh script and it will start monerod, or wait for the cron job to kick it off
-A screen session is started you can attach to it by the command
+Now you can run the check_monerod_status.sh script and it will start monerod, or wait for the cron job to kick it off.
+
+A screen session is started you can attach to it by the command.
 
     screen -r monerod
     
