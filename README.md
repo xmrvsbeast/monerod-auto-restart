@@ -19,9 +19,7 @@ screen, curl, pgrep, bc
     uptime_days="1"
     uptime_hours="12"
 
-Then stop your monerod, we will let the script start and manage it.  A screen session is started you can attach to it by the command
-
-    screen -r monerod
+Then stop your monerod, we will let the script start and manage it.
 
 **Add a cron job to run the check script**
 
@@ -37,6 +35,11 @@ Make the scripts executable
     chmod +x check_monerod_status.sh monerod-run.sh
 
 Now you can run the check_monerod_status.sh script and it will start monerod, or wait for the cron job to kick it off
+A screen session is started you can attach to it by the command
+
+    screen -r monerod
+    
+    Ctrl+a then d to detach from the screen
 
 **Disable/Enable auto-restart**
 
