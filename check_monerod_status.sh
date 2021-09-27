@@ -35,7 +35,7 @@ if [ "$lbr_time" == "0" ];then echo "monerod running but not ready for RPC check
 if [ -z "$lbr_time" ];then 
 	date
 	echo "monerod not responding to RPC, force kill monerod"
-	monerod_pid=$(pgrep monerod) && kill -9 "$monerod_pid"
+	monerod_pid=$(pgrep -x monerod) && kill -9 "$monerod_pid"
 	echo
 	exit
 fi
@@ -58,12 +58,12 @@ do
 	echo "monerod uptime is $monerod_uptime_d day(s) and $monerod_uptime_hr hour(s), checking restart conditions"
 	
 	#check last block recorded time via RPC
-	lbr_time=$(curl -s --max-time 1 http://127.0.0.1:18081/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"get_last_block_header"}' -H 'Content-Type: application/json' |grep -Po 'timestamp": \K[^",]*')
+	lbr_time=$(curl -s --max-time 2 http://127.0.0.1:18081/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"get_last_block_header"}' -H 'Content-Type: application/json' |grep -Po 'timestamp": \K[^",]*')
 
 	#if LBR time is null force kill monerod
 	if [ -z "$lbr_time" ];then 
 		echo "Unable to get last block recorded time, forece kill monerod"
-		monerod_pid=$(pgrep monerod) && kill -9 "$monerod_pid"
+		monerod_pid=$(pgrep -x monerod) && kill -9 "$monerod_pid"
 		echo
 		rm -f $state_file
 		exit
