@@ -25,6 +25,18 @@ if [ -z "$monerod_screen" ]; then
 	exit
 fi
 
+#check if monerod is responding to status command
+screen -dmS md-status-check $monerod_dir/monerod status && sleep 8
+md_status_screen=$(screen -ls | awk '/md-status-check/ {print $1}')
+if [ -n "$md_status_screen" ]; then
+        date
+        echo "monerod not responding to status command, kill monerod"
+        screen -XS $md_status_screen quit
+        for i in `pgrep -x monerod`; do kill $i; done
+        echo
+        exit
+fi
+
 #check if monerod is responding via RPC
 lbr_time=$(curl -s --max-time 2 http://127.0.0.1:18081/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"get_last_block_header"}' -H 'Content-Type: application/json' |grep -Po 'timestamp": \K[^",]*')
 	
