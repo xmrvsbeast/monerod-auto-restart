@@ -33,6 +33,10 @@ crontab -e
 Make the scripts executable 
 
     chmod +x check_monerod_status.sh monerod-run.sh
+    
+Create trigger file (see explenaion fo trigger file below)
+
+    touch /path/to/scripts/monerod-restart.trigger
 
 Now you can run the check_monerod_status.sh script and it will start monerod, or wait for the cron job to kick it off.
 
