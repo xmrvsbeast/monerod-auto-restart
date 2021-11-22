@@ -34,7 +34,7 @@ Make the scripts executable
 
     chmod +x check_monerod_status.sh monerod-run.sh
     
-Create trigger file (see explenaion fo trigger file below)
+Create trigger file (see explanation for trigger file below)
 
     touch /path/to/scripts/monerod-restart.trigger
 
